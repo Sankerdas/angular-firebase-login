@@ -1,6 +1,19 @@
 <div style="text-align:center">
-  <h1>
+  <h4>
     Welcome to {{ title }}!
-  </h1>
+  </h4>
+
+  <!-- 1 Navigation / router  -->
+
+  <nav>
+    <div class="nav-wrapper">
+      <a href="#" class="brand-logo right">Logo</a>
+      <ul id="nav-mobile" class="left hide-on-med-and-down">
+        <li><a routerLink="" routerLinkActive='active' >Home</a></li>
+        <li><a routerLink="" routerLinkActive='active' >Profile</a></li>
+        <li><a routerLink="" routerLinkActive='active' >Login</a></li>
+      </ul>
+    </div>
+  </nav>
  
 <router-outlet></router-outlet>
