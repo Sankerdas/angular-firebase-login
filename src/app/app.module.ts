@@ -10,6 +10,8 @@ import { ProfileComponent } from './profile/profile.component';
 import { RouterModule } from '@angular/router';
 import { appRoutes } from './routerConfig';
 
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -20,7 +22,9 @@ import { appRoutes } from './routerConfig';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    RouterModule.forRoot(appRoutes)
+    RouterModule.forRoot(appRoutes),
+    FormsModule,
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

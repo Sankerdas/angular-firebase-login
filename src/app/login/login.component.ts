@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { DataService } from '../service/data.service';
 
 @Component({
   selector: 'app-login',
@@ -7,7 +8,18 @@ import { Component, OnInit } from '@angular/core';
 })
 export class LoginComponent implements OnInit {
 
-  constructor() { }
+  loginFrm = this.dataService.loginForm;
+
+  login() {
+    if (this.loginFrm.valid) {
+      console.log('valid ' + this.loginFrm);
+    } else {
+      console.log('not valid ' + this.loginFrm);
+    }
+
+  }
+
+  constructor(public  dataService: DataService) { }
 
   ngOnInit() {
   }
