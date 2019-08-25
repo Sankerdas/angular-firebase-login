@@ -12,11 +12,10 @@ export class LoginComponent implements OnInit {
 
   login() {
     if (this.loginFrm.valid) {
-      console.log('valid ' + this.loginFrm);
+      console.log(this.loginFrm.value);
     } else {
-      console.log('not valid ' + this.loginFrm);
+      console.log('not valid ');
     }
-
   }
 
   constructor(public  dataService: DataService) { }
