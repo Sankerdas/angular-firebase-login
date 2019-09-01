@@ -13,6 +13,7 @@ export class DataService {
 
   private profPath = '/profiles'; // firebase collection name (Realtime database)
 
+
   registerForm: FormGroup = this.fb.group({
     name: ['', Validators.required],
     phone: ['', Validators.required],
@@ -26,10 +27,19 @@ export class DataService {
     password: ['', Validators.required]
   });
 
-  registerData(data) {
+  registerData(data) { // insert into db
   const dataObj = this.db.database.ref(this.profPath);
   dataObj.push(data);
   console.log('Data pushed into firebase');
   }
+
+  fetchProfData(dbPath) { // fetch data from db
+    return this.db.list(dbPath).valueChanges();
+  }
+
+  // getShares(path): Observable<any[]> {
+  // return this.db.list(path).valueChanges();
+  // }
+
 
 }

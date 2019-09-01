@@ -1,3 +1,7 @@
 .active{
-  background: rebeccapurple;
+  background: #6d4c41;
+}
+.navLogo{
+    width: 60px;
+    padding: 10px;
 }

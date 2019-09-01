@@ -1,1 +1,19 @@
-<p>profile works!</p>
+
+<h5>Profile Data</h5>
+
+<div class="row">
+  <div class="col s12 m12" *ngFor="let proData of profile">
+    <div class="card-panel hoverable purple darken-3">
+      <div class="card-content white-text">
+        <span class="card-title"><h5>{{ proData.name }}</h5></span>
+        <ul>
+            <li>{{ proData.phone }}</li>
+            <li>{{ proData.email }}</li>
+        </ul>
+      </div>
+      <div class="card-action">
+        <a>Click here</a>
+      </div>
+    </div>
+  </div>
+</div>

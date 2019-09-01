@@ -13,6 +13,7 @@ export class RegisterComponent implements OnInit {
   regiser() {
     if (this.regsterFrm.valid) {
       this.dataService.registerData(this.regsterFrm.value);
+      this.regsterFrm.reset();
     } else {
       console.log('not valid');
     }
