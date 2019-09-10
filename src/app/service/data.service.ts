@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { AngularFireDatabase, AngularFireList } from 'angularfire2/database'; // firebase
+import { Observable } from 'rxjs';
+import { LocalStorageService } from 'ngx-webstorage';
 
 @Injectable({
   providedIn: 'root'
@@ -8,7 +10,7 @@ import { AngularFireDatabase, AngularFireList } from 'angularfire2/database'; //
 
 export class DataService {
 
-  constructor( private fb: FormBuilder, private db: AngularFireDatabase ) { }
+  constructor( private fb: FormBuilder, private db: AngularFireDatabase, private localStr: LocalStorageService ) { }
 
   private profPath = '/profiles'; // firebase collection name (Realtime database)
 
@@ -31,14 +33,19 @@ export class DataService {
   console.log('Data pushed into firebase');
   }
 
-  fetchFromDb(dbPath) { // fetch data from db
+  fetchFromDb(dbPath): Observable<any[]> { // fetch data from db
     const dbData = this.db.list(dbPath).valueChanges();
     // const dbData = this.db.list(dbPath).snapshotChanges();
     return dbData;
   }
 
-  // getShares(path): Observable<any[]> {
-  // return this.db.list(path).valueChanges();
-  // }
+  userLogin(lgnDta) {
+    const em = lgnDta.email;
+    this.localStr.store('mcqUser', em);
+  }
+
+  userLogout() {
+    this.localStr.clear('mcqUser');
+  }
 
 }

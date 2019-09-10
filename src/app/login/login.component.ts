@@ -12,10 +12,16 @@ export class LoginComponent implements OnInit {
 
   login() {
     if (this.loginFrm.valid) {
-      console.log(this.loginFrm.value);
+      const loginData = this.loginFrm.value;
+      this.dataService.userLogin(loginData);
+      this.loginFrm.reset();
     } else {
       console.log('not valid ');
     }
+  }
+
+  logout() {
+    this.dataService.userLogout();
   }
 
   constructor(public  dataService: DataService) { }
