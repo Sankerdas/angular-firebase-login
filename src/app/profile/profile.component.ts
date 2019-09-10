@@ -10,9 +10,13 @@ export class ProfileComponent implements OnInit {
 
   constructor(private dataservice: DataService) { }
 
-  profile: any;
+  profiles: any;
+  getUser: any;
+
   getProfile() {
-    this.dataservice.fetchProfData('/profiles').subscribe( res => (this.profile = res) );
+    this.dataservice.fetchFromDb('/profiles').
+    subscribe( res => {
+       this.profiles = res; });
   }
 
   ngOnInit() {

@@ -4,6 +4,7 @@ import { HomeComponent } from './home/home.component';
 import { ProfileComponent } from './profile/profile.component';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
+import { UserGuard } from './guards/user.guard';
 
 export const appRoutes: Routes = [
     {
@@ -12,7 +13,8 @@ export const appRoutes: Routes = [
     },
     {
         path: 'profile',
-        component: ProfileComponent
+        component: ProfileComponent,
+        canActivate: [UserGuard]
     },
     {
         path: 'login',
