@@ -17,7 +17,7 @@
             Submit
         </button>
     </div>
-
+    <p *ngIf="isErr" >Error : {{ logError }} </p>
     <p>{{loginFrm.value | json}}</p>
     <p>{{loginFrm.status | json}}</p>
 

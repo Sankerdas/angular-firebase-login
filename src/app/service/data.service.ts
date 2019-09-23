@@ -13,6 +13,7 @@ export class DataService {
   constructor( private fb: FormBuilder, private db: AngularFireDatabase, private localStr: LocalStorageService ) { }
 
   private profPath = '/profiles'; // firebase collection name (Realtime database)
+  public fndUsr: Observable<any[]>;
 
   registerForm: FormGroup = this.fb.group({
     name: ['', Validators.required],
@@ -39,9 +40,13 @@ export class DataService {
     return dbData;
   }
 
-  userLogin(lgnDta) {
-    const em = lgnDta.email;
-    this.localStr.store('mcqUser', em);
+
+  userLogin(lgnDta): Observable<any[]> {
+    // const em = lgnDta.email;
+    const  em = 's@gmail.com';
+    const fndData = this.db.list('profiles', ref => (
+    ref.orderByChild('email').equalTo(em))).valueChanges();
+    return fndData;
   }
 
   userLogout() {
