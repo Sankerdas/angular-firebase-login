@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { DataService } from '../service/data.service';
 import { LocalStorageService } from 'ngx-webstorage';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -9,41 +10,36 @@ import { LocalStorageService } from 'ngx-webstorage';
 })
 export class LoginComponent implements OnInit {
 
-  constructor(public  dataService: DataService, private localStorage: LocalStorageService) { }
+  constructor(public  dataService: DataService, private localStorage: LocalStorageService, private router: Router) { }
 
   loginFrm = this.dataService.loginForm;
   chklogin: any;
-  logError: any;
-  isErr = false;
+  shwResponse: any;
 
   login() {
     if (this.loginFrm.valid) {
       const loginData = this.loginFrm.value;
-      this.dataService.userLogin(loginData).subscribe( res => {
-        this.chklogin = res;
-      });
-      console.log(this.chklogin);
-      this.errorWithCatch(this.chklogin);
+      const result = this.dataService.userLogin(loginData);
+      console.log(result);
+
+      if (result === 'match') {
+        this.shwResponse = 'Matched';
+        this.localStorage.store('mcqz', loginData.email);
+        this.router.navigate(['profile']);
+
+      } else if (result === 'notmatch') {
+        this.shwResponse = 'Not Matching Please try again';
+
+      } else if (result === 'err') {
+      this.shwResponse = 'Error Please try again';
+      }
+
       this.loginFrm.reset();
 
     } else {
       console.log('not valid ');
     }
   }
-
-    errorWithCatch(chk) {
-    try {
-      if (chk.length === 1) {
-        this.localStorage.store('mcqz', chk[0].email);
-        console.log(chk[0].email);
-        this.isErr = false;
-      }
-    } catch (error) {
-    console.log(' — Error is handled gracefully: ', error.name);
-    this.isErr = true;
-    this.logError = 'Please try again';
-    }
-    }
 
   logout() {
     this.dataService.userLogout();

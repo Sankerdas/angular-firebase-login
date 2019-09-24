@@ -10,10 +10,11 @@ import { LocalStorageService } from 'ngx-webstorage';
 
 export class DataService {
 
-  constructor( private fb: FormBuilder, private db: AngularFireDatabase, private localStr: LocalStorageService ) { }
+  constructor( private fb: FormBuilder, private db: AngularFireDatabase, private localStorage: LocalStorageService ) { }
 
   private profPath = '/profiles'; // firebase collection name (Realtime database)
   public fndUsr: Observable<any[]>;
+  public mtchPwd: any;
 
   registerForm: FormGroup = this.fb.group({
     name: ['', Validators.required],
@@ -40,17 +41,37 @@ export class DataService {
     return dbData;
   }
 
-
-  userLogin(lgnDta): Observable<any[]> {
-    // const em = lgnDta.email;
-    const  em = 's@gmail.com';
-    const fndData = this.db.list('profiles', ref => (
+  userLogin(lgnDta) {
+    // const  em = 's@gmail.com';
+    // const psw = 'a';
+    const em = lgnDta.email;
+    const psw = lgnDta.password;
+    const fndEmail = this.db.list('profiles', ref => (
     ref.orderByChild('email').equalTo(em))).valueChanges();
-    return fndData;
+    fndEmail.subscribe(res => {
+      this.mtchPwd = res;
+    });
+    return  this.errorWithCatch(this.mtchPwd, psw);
   }
 
+  errorWithCatch(chk, pass) {
+    try {
+      if (chk.length === 1) {
+        if (chk[0].password === pass) {
+          return 'match';
+        } else {
+          return 'notmatch';
+        }
+      }
+    } catch (error) {
+    console.log(' —> Error is handled gracefully: ', error.name);
+    return 'err';
+    }
+
+    }
+
   userLogout() {
-    this.localStr.clear('mcqUser');
+    this.localStorage.clear('mcqz');
   }
 
 }
